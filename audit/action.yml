@@ -1,0 +1,17 @@
+name: 'Android Audit'
+description: 'Ejecuta el auditor de reglas Android (59 reglas)'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - run: |
+        curl -O https://raw.githubusercontent.com/pitist/lean_audit_project/main/auditor_completo.py
+        python3 auditor_completo.py . || true
+      shell: bash
+    - uses: actions/upload-artifact@v7
+      with:
+        name: report
+        path: reporte_final.json
